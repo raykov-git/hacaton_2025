@@ -117,3 +117,17 @@ async def convert_message_to_str(message: Message) -> str:
 3. **Протестировать** при одновременных запросах.
 
 Если нужно ещё больше скорости — рассмотрите **вынос транскрибации в отдельный микросервис** (например, на FastAPI с горизонтальным масштабированием).
+
+
+
+```Python
+# может понадобиться
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+

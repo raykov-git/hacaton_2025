@@ -5,18 +5,6 @@ import uvicorn
 import os
 from pydantic import BaseModel
 
-
-"""# Создаём логгер для main.py
-LOGGER = logging.getLogger("main")
-LOGGER.setLevel(logging.INFO)
-
-# Файл для логов main.py
-file_handler = logging.FileHandler("main.log", encoding="utf-8", mode="a")
-file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
-
-LOGGER.addHandler(file_handler)"""
-
-
 # Создаём логгер для main.py
 LOGGER = logging.getLogger("main")
 LOGGER.setLevel(logging.INFO)
@@ -32,66 +20,47 @@ file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelnam
 
 LOGGER.addHandler(file_handler)
 
-
-
 bot = ClinicBot()
 app = FastAPI()
-
-
-"""# что это?
-from fastapi.middleware.cors import CORSMiddleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)"""
-
-
-@app.get("/doctors")
-def get_doctors():
-    return {"doctors": bot.get_all_doctors()}
-
-
-@app.post("/some_doctor")
-async def add_doctor(
-    name: str = Form(...),  # Указываем, что параметр приходит из формы
-    specialty: str = Form(...)
-):
-    return {"status": f"Добавлен доктор {name}, специальность: {specialty}"}
-
-
-# как выбрать, про какого докторя я хочу узнать
-@app.get("/doctor")
-def get_doctors():
-    return {"doctors": bot.get_doctor()}
-
 
 # Эндпоинт для GET-запроса "/help"
 @app.get("/help")
 def get_help():
+    LOGGER.info("эндпоинт /help выполнен")
     return {"response": bot.help()}
 
 
 # Корневой эндпоинт
-@app.get("/")
-def read_root():
-    return {"message": bot.root()}
+@app.get("/api")
+def api():
+    LOGGER.info("эндпоинт /api выполнен")
+    return {"answer": bot.api()}
+
+
+# здоровье... бота?
+@app.get("/health")
+def health():
+    LOGGER.info("эндпоинт /health выполнен")
+    return {
+        "status": "ok",
+        "timestamp": "2025-03-31T12:00:00Z"
+    }
+
 
 
 class RequestModel(BaseModel):
-    message: str
+    question: str
 
-@app.post("/process_message")
+
+# Описание: Принимает вопрос, возвращает ответ
+@app.post("/qa")
 async def process_message(request: RequestModel):
-    reply = bot.process_message(request.message)
-    LOGGER.info("/process_message выполнен")
-    return {
-        "response": {
-            "text": reply,
-            "end_session": False
-        },
-        "version": "1.0"
+    proces_time = 0 # время обработки запроса
+    reply = bot.process_message(request.question)
+    LOGGER.info("эндпоинт /qa выполнен")
+    return{
+        "answer": reply,
+        "processing_time": proces_time
     }
 
 

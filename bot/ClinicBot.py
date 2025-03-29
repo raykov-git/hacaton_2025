@@ -28,8 +28,6 @@ LOGGER.addHandler(file_handler)
 class ClinicBot:
 
     def __init__(self):
-        # self.model = whisper.load_model("small")
-        # logging.info(f"Using device: {self.device}")
 
         # TODO скрапер по api при инициализации и спустя время
 
@@ -39,7 +37,7 @@ class ClinicBot:
         return "Этот бот может..."
     
 
-    def root(self):
+    def api(self):
         return "Добро пожаловать в ClinicBot API!"
     
 
@@ -69,13 +67,23 @@ class ClinicBot:
                         verify_ssl_certs=False, model="GigaChat-Max") as giga:
                 response = giga.chat(prompt[0])
 
-            return "Ответ от llm:" + "\n" + response.choices[0].message.content
+            return response.choices[0].message.content
         else:
             LOGGER.info('Извините, не корректный промпт')
             return('Извините, не корректный промпт')
 
 
     def process_message(self, user_text):
+        """
+        Description:
+            ответ
+        Args:
+            param1 (type): Описание параметра
+            uset_text (str): текст запроса
+        
+        Returns:
+            type: Что возвращает
+        """
         if not user_text:
             LOGGER.error("бот не получил текст")
             return "бот не получил текст"
@@ -85,6 +93,5 @@ class ClinicBot:
             return "Вот Ваш запрос:\n" + user_text
         else:
             LOGGER.info("LLM ответ пользователю")
-            #return("LLM ответ пользователю")
-            return(user_text + "\n" + self.get_answer_from_llm(user_text))
+            return(self.get_answer_from_llm(user_text))
         

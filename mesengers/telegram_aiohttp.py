@@ -40,7 +40,7 @@ WHISPER_MODEL = whisper.load_model("small").to(device)
 
 # Токен бота
 BOT_TOKEN = "7902145577:AAHdr9SmhEpgCM3pdBU_TBGMYaL_aMAfACw"
-URL_API_CLINIC_BOT = "http://127.0.0.1:8000/"
+BASE_URL = "http://127.0.0.1:8000/"
 
 # Инициализация бота
 bot = Bot(token=BOT_TOKEN)
@@ -50,13 +50,13 @@ dp = Dispatcher()
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     LOGGER.info(f"Получена команда /start от {message.from_user.id}")
-    api_url = URL_API_CLINIC_BOT
+    api_url = BASE_URL + "api"
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
                 if response.status == 200:
                     data = await response.json()
-                    welcome_message = data.get("message", "Добро пожаловать в ClinicBot!")
+                    welcome_message = data.get("answer")
                     await message.answer(welcome_message)
                 else:
                     await message.answer("Не удалось получить приветствие от сервера.")
@@ -72,9 +72,9 @@ async def cmd_help(message: types.Message):
 
 
 async def process_user_text(text: str, message: types.Message, processing_msg):
-    api_url = URL_API_CLINIC_BOT + "process_message"
+    api_url = BASE_URL + "qa"
     # Изменяем payload согласно RequestModel (используем "message" вместо "text")
-    payload = {"message": text}
+    payload = {"question": text}
     
     try:
         async with aiohttp.ClientSession() as session:
@@ -82,7 +82,7 @@ async def process_user_text(text: str, message: types.Message, processing_msg):
                 if response.status == 200:
                     data = await response.json()
                     # Извлекаем ответ из вложенной структуры response.text
-                    reply = data.get("response", {}).get("text", "Не удалось обработать запрос.")
+                    reply = data.get("answer")
                     await bot.delete_message(chat_id=processing_msg.chat.id, message_id=processing_msg.message_id)
                     await message.answer(reply)
                 else:

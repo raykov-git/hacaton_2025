@@ -117,3 +117,53 @@
 2025-03-29 00:39:44,025 - telegram_aiohttp - INFO - Bot start
 2025-03-29 00:42:41,960 - telegram_aiohttp - INFO - Обработка текста от 1026077068: сколько слонов поместится в поликлинике?
 2025-03-29 00:42:56,744 - telegram_aiohttp - INFO - Обработка текста от 1026077068: кол центр
+2025-03-29 22:01:26,119 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 22:01:42,473 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 22:01:43,703 - telegram_aiohttp - ERROR - Ошибка в работе бота: Telegram server says - Not Found
+2025-03-29 22:01:43,967 - telegram_aiohttp - INFO - Bot stopp
+2025-03-29 22:02:20,719 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 22:02:33,702 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 22:02:34,827 - telegram_aiohttp - ERROR - Ошибка в работе бота: Telegram server says - Not Found
+2025-03-29 22:02:35,089 - telegram_aiohttp - INFO - Bot stopp
+2025-03-29 22:02:58,980 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 22:03:15,475 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 22:03:16,481 - telegram_aiohttp - INFO - Bot start
+2025-03-29 22:04:28,157 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Что там со слонами?
+2025-03-29 22:04:28,884 - telegram_aiohttp - ERROR - Ошибка сервера: 404 - {"detail":"Not Found"}
+2025-03-29 22:04:58,190 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Не пон
+2025-03-29 22:04:58,538 - telegram_aiohttp - ERROR - Ошибка сервера: 404 - {"detail":"Not Found"}
+2025-03-29 22:06:16,487 - telegram_aiohttp - INFO - Bot stopp
+2025-03-29 22:06:16,499 - telegram_aiohttp - INFO - Bot stopped by user
+2025-03-29 22:06:37,350 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 22:06:45,959 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 22:06:46,902 - telegram_aiohttp - INFO - Bot start
+2025-03-29 22:08:03,453 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Тебе нравятся слоны?
+2025-03-29 22:41:21,007 - telegram_aiohttp - INFO - Bot stopp
+2025-03-29 22:41:21,128 - telegram_aiohttp - INFO - Bot stopped by user
+2025-03-29 22:41:40,201 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 22:41:53,199 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 22:41:54,555 - telegram_aiohttp - INFO - Bot start
+2025-03-29 22:43:57,153 - telegram_aiohttp - INFO - Обработка текста от 1026077068: hi
+2025-03-29 22:43:58,010 - telegram_aiohttp - ERROR - Ошибка сервера: 422 - {"detail":[{"type":"missing","loc":["body","question"],"msg":"Field required","input":{"message":"hi"}}]}
+2025-03-29 22:45:11,019 - telegram_aiohttp - INFO - Обработка текста от 1026077068: hi
+2025-03-29 22:45:11,262 - telegram_aiohttp - ERROR - Ошибка сервера: 422 - {"detail":[{"type":"missing","loc":["body","question"],"msg":"Field required","input":{"message":"hi"}}]}
+2025-03-29 22:48:02,625 - telegram_aiohttp - INFO - Получена команда /start от 1026077068
+2025-03-29 22:48:07,421 - telegram_aiohttp - INFO - Обработка текста от 1026077068: start
+2025-03-29 22:48:07,710 - telegram_aiohttp - ERROR - Ошибка сервера: 422 - {"detail":[{"type":"missing","loc":["body","question"],"msg":"Field required","input":{"message":"start"}}]}
+2025-03-29 22:59:34,930 - telegram_aiohttp - INFO - Bot stopp
+2025-03-29 22:59:34,968 - telegram_aiohttp - INFO - Bot stopped by user
+2025-03-29 22:59:54,940 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-29 23:00:09,518 - telegram_aiohttp - INFO - Bot starting...
+2025-03-29 23:00:10,735 - telegram_aiohttp - INFO - Bot start
+2025-03-29 23:00:40,550 - telegram_aiohttp - INFO - Обработка текста от 1026077068: как устроен желудок у коровы?
+2025-03-29 23:01:07,557 - telegram_aiohttp - INFO - Получена команда /start от 1026077068
+2025-03-29 23:01:13,177 - telegram_aiohttp - INFO - Получена команда /help от 1026077068
+2025-03-29 23:01:21,062 - telegram_aiohttp - INFO - Обработка текста от 1026077068: /api
+2025-03-29 23:01:40,069 - telegram_aiohttp - INFO - Обработка текста от 1026077068: что такое api
+2025-03-29 23:01:53,304 - telegram_aiohttp - INFO - Обработка текста от 1026077068: api
+2025-03-29 23:02:30,662 - telegram_aiohttp - INFO - Обработка текста от 1026077068: /как_устроен_желудок_у_коровы?
+2025-03-29 23:02:48,944 - telegram_aiohttp - INFO - Обработка текста от 1026077068: /api
+2025-03-29 23:02:58,390 - telegram_aiohttp - INFO - Обработка текста от 1026077068: api
+2025-03-29 23:20:39,533 - telegram_aiohttp - INFO - Обработка текста от 1026077068: как дела?
+2025-03-29 23:26:12,272 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Сколько работает врач терапевт?
+2025-03-29 23:26:28,187 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Круто, спасибо!
