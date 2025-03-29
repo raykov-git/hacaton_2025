@@ -24,7 +24,6 @@
 1. ngrok http http://localhost:8000
 2. uvicorn main:app --reload --host 0.0.0.0 --port 8000
 3. FastAPI можно развернуть на:
-4. абстрактные классы
    
     * Uvicorn/Gunicorn (для VPS)
 
@@ -33,3 +32,6 @@
     * Heroku (бесплатный хостинг)
 
     * Google Cloud Run / AWS Lambda (serverless)
+
+4. абстрактные классы
+5. 
