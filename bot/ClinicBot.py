@@ -57,6 +57,9 @@ class ClinicBot:
 
         result = find_similar_context(user_text, knowledge_base)
         LOGGER.info(result[0].get('type', 'unknown'),)
+        confidence  = result[0].get('is_confident', 'unknown')
+        if(confidence == False):
+            return ('Извините, я вас не понимаю. Попробуйте изменить запрос.')
         prompt = []
 
         if create_prompt(result[0].get('type', 'unknown'), user_text, prompt):
@@ -70,7 +73,7 @@ class ClinicBot:
             return response.choices[0].message.content
         else:
             LOGGER.info('Извините, не корректный промпт')
-            return('Извините, не корректный промпт')
+            return('Извините, я вас не понимаю. Попробуйте изменить запрос.')
 
 
     def process_message(self, user_text):

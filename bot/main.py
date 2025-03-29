@@ -27,7 +27,7 @@ app = FastAPI()
 
 # Корневой эндпоинт
 @app.get("/api")
-def api():
+def api():      
     LOGGER.info("эндпоинт /api выполнен")
     return {"answer": bot.api()}
 

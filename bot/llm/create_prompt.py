@@ -162,7 +162,12 @@ def find_similar_context(query, knowledge_base, top_k=1):
 
     results = []
     for similarity, entry in similarities[:top_k]:
-        results.append({"type": entry["type"]})
+        #results.append({"type": entry["type"]})
+        results.append({
+            "type": entry["type"],
+            "similarity": float(similarity),  # явное приведение к float для сериализации
+            "is_confident": similarity > 0.6  # флаг уверенности
+        })
 
     return results
 
@@ -221,6 +226,12 @@ def create_prompt(category, query, prompt_out=None):
                 f"Дай точный ответ на вопрос пользователя'. Для ответа используй дополнительную информацию (INFO)."
                 f"Вопрос: '{query}'. Дополнительная информация (INFO): "
                 f"{contacts_text}\n\n"
+            )
+        elif category == "cow":
+            prompt = (
+                f"Ты — бот, который рассказывает шутку про корову в поликлинике "
+                f"Дай смешную и добрую шутку на основе запроса пользователя"
+                f"Запрос: '{query}'\n\n"
             )
 
 

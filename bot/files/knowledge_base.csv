@@ -1,7 +1,7 @@
 context,type
 Сколько стоит общий анализ,price_and_timing
 Стоимость процедур,price_and_timing
-Какова стоимость анализа на гормоны щитовидной железы,price_and_timing
+Какова стоимость анализа,price_and_timing
 Через сколько дней готовы результаты,price_and_timing
 Когда придут анализы из лаборатории,price_and_timing
 Можно ли узнать цену,price_and_timing
@@ -9,6 +9,7 @@ context,type
 Как долго делают анализы,price_and_timing
 Цена приёма,price_and_timing
 Когда будут готовы анализы,price_and_timing
+Долго делают анализы,price_and_timing
 Как правильно сдавать анализы,preparation
 Что можно делать перед анализами,preparation
 Что нельзя делать перед анализами,preparation
@@ -20,6 +21,7 @@ context,type
 Что можно,preparation
 Как подготовиться,preparation
 Телефон регистратуры поликлиники,contacts
+Колл-центр,contacts
 Как записаться,contacts
 Куда писать жалобу на врача,contacts
 Номер горячей линии,contacts
@@ -29,6 +31,7 @@ context,type
 Телефон для экстренных случаев,contacts
 Как связаться с заведующим отделением,contacts
 Куда звонить,contacts
+Оператор,contacts
 Во сколько открывается поликлиника,schedule
 Работает ли клиника в субботу,schedule
 График работы процедурного кабинета,schedule
@@ -39,3 +42,4 @@ context,type
 Когда перерыв на обед,schedule
 График работы в праздничные дни,schedule
 До какого времени вечером можно записаться,schedule
+корова,cow
