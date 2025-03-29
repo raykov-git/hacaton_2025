@@ -68,7 +68,7 @@ async def cmd_start(message: types.Message):
 @dp.message(Command("help"))
 async def cmd_help(message: types.Message):
     LOGGER.info(f"Получена команда /help от {message.from_user.id}")
-    await message.answer("тут нужно чтобы бот обработал команду 'help'")
+    await message.answer("Задайте мне вопрос текстом или голосом")
 
 
 async def process_user_text(text: str, message: types.Message, processing_msg):

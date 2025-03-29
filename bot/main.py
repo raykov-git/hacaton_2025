@@ -4,6 +4,8 @@ import logging
 import uvicorn
 import os
 from pydantic import BaseModel
+from datetime import datetime
+import time
 
 # Создаём логгер для main.py
 LOGGER = logging.getLogger("main")
@@ -23,13 +25,6 @@ LOGGER.addHandler(file_handler)
 bot = ClinicBot()
 app = FastAPI()
 
-# Эндпоинт для GET-запроса "/help"
-@app.get("/help")
-def get_help():
-    LOGGER.info("эндпоинт /help выполнен")
-    return {"response": bot.help()}
-
-
 # Корневой эндпоинт
 @app.get("/api")
 def api():
@@ -43,24 +38,32 @@ def health():
     LOGGER.info("эндпоинт /health выполнен")
     return {
         "status": "ok",
-        "timestamp": "2025-03-31T12:00:00Z"
+        "timestamp": datetime.now()
     }
-
 
 
 class RequestModel(BaseModel):
     question: str
 
 
-# Описание: Принимает вопрос, возвращает ответ
 @app.post("/qa")
 async def process_message(request: RequestModel):
-    proces_time = 0 # время обработки запроса
+    """
+    Description:
+        эндпоинт для вопроса боту
+    Args:
+        param1 json с вопросом question
+    
+    Returns:
+        type: json с ответом
+    """
+    start = time.perf_counter()  # Точный счетчик времени
     reply = bot.process_message(request.question)
     LOGGER.info("эндпоинт /qa выполнен")
+    end = time.perf_counter()
     return{
         "answer": reply,
-        "processing_time": proces_time
+        "processing_time": end - start
     }
 
 

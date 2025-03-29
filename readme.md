@@ -34,4 +34,5 @@
     * Google Cloud Run / AWS Lambda (serverless)
 
 4. абстрактные классы
-5. 
+5. отзывы
+6. прописать пути
