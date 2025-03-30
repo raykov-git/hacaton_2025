@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import logging
-from typing import List, Dict, Any, Optional
 
 LOGGER = logging.getLogger(__name__)
 
