@@ -134,3 +134,62 @@
 2025-03-30 23:51:51,769 - create_prompt - INFO - данные из БД получены
 2025-03-30 23:51:51,769 - create_prompt - INFO - Форматируем в текст
 2025-03-30 23:51:51,769 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 00:53:53,258 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 00:53:53,271 - create_prompt - INFO - данные из БД получены
+2025-03-31 00:53:53,271 - create_prompt - INFO - Форматируем в текст
+2025-03-31 00:53:53,271 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 00:55:49,378 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 00:55:49,382 - create_prompt - INFO - данные из БД получены
+2025-03-31 00:55:49,382 - create_prompt - INFO - Форматируем в текст
+2025-03-31 00:55:49,382 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 00:56:51,346 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 00:56:51,361 - create_prompt - INFO - данные из БД получены
+2025-03-31 00:56:51,361 - create_prompt - INFO - Форматируем в текст
+2025-03-31 00:56:51,361 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 01:10:21,845 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 01:10:21,846 - create_prompt - INFO - данные из БД получены
+2025-03-31 01:10:21,847 - create_prompt - INFO - Форматируем в текст
+2025-03-31 01:10:21,847 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 01:16:24,654 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 01:16:24,655 - create_prompt - INFO - данные из БД получены
+2025-03-31 01:16:24,656 - create_prompt - INFO - Форматируем в текст
+2025-03-31 01:16:24,656 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 01:17:01,341 - create_prompt - INFO - query_preprocessed = время коллцентра
+2025-03-31 01:17:09,000 - create_prompt - INFO - query_preprocessed = стоит рентген какой-то кости
+2025-03-31 01:18:05,679 - create_prompt - INFO - query_preprocessed = стоит рентген какой-то кости
+2025-03-31 01:19:44,699 - create_prompt - INFO - query_preprocessed = кости стоит рентген малоберцовой
+2025-03-31 01:20:04,993 - create_prompt - INFO - query_preprocessed = кости стоит ренген малоберцовой
+2025-03-31 01:20:19,258 - create_prompt - INFO - query_preprocessed = тупая железяка пойми
+2025-03-31 01:20:34,975 - create_prompt - INFO - query_preprocessed = расскажи мне про корову
+2025-03-31 01:20:57,966 - create_prompt - INFO - query_preprocessed = дали справку корове
+2025-03-31 01:27:29,958 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 01:27:29,968 - create_prompt - INFO - данные из БД получены
+2025-03-31 01:27:29,968 - create_prompt - INFO - Форматируем в текст
+2025-03-31 01:27:29,968 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 01:36:48,688 - create_prompt - INFO - query_preprocessed = кости стоит ренген малоберцовой
+2025-03-31 01:37:00,718 - create_prompt - INFO - query_preprocessed = часы работы поликлиники
+2025-03-31 01:37:34,321 - create_prompt - INFO - query_preprocessed = стоит рентген какой-то кости
+2025-03-31 01:38:00,458 - create_prompt - INFO - query_preprocessed = привет как позвонить в поликлинику
+2025-03-31 01:38:21,113 - create_prompt - INFO - query_preprocessed = сколько стоит узи пуза
+2025-03-31 01:38:40,067 - create_prompt - INFO - query_preprocessed = сколько стоит узи поче
+2025-03-31 01:39:19,574 - create_prompt - INFO - query_preprocessed = что делать перед сдачей крови
+2025-03-31 01:39:47,099 - create_prompt - INFO - query_preprocessed = как записаться к лору
+2025-03-31 01:40:02,635 - create_prompt - INFO - query_preprocessed = могу окушеру записаться
+2025-03-31 01:40:55,771 - create_prompt - INFO - query_preprocessed = консультация врача онколога
+2025-03-31 01:41:14,115 - create_prompt - INFO - query_preprocessed = сколько стоит врача онколога
+2025-03-31 01:42:00,642 - create_prompt - INFO - query_preprocessed = консультация врачапсихотерапевта сколько стоит
+2025-03-31 01:43:32,130 - create_prompt - INFO - query_preprocessed = детям работает отделение консультативной помощи
+2025-03-31 01:44:12,427 - create_prompt - INFO - query_preprocessed = детям работает отделение консультативной помощи
+2025-03-31 01:44:23,293 - create_prompt - INFO - query_preprocessed = отделение консультативной помощи детям
+2025-03-31 01:44:30,637 - create_prompt - INFO - query_preprocessed = отделение консультативной помощи детям время
+2025-03-31 01:46:17,101 - create_prompt - INFO - Получаем данные из БД
+2025-03-31 01:46:17,102 - create_prompt - INFO - данные из БД получены
+2025-03-31 01:46:17,102 - create_prompt - INFO - Форматируем в текст
+2025-03-31 01:46:17,102 - create_prompt - INFO - Форматируем в текст - ок
+2025-03-31 01:46:31,718 - create_prompt - INFO - query_preprocessed = отделение консультативной помощи детям время
+2025-03-31 01:46:56,390 - create_prompt - INFO - query_preprocessed = детям работает отделение консультативной помощи
+2025-03-31 01:47:35,187 - create_prompt - INFO - query_preprocessed = рассвет зака горит невиданный море
+2025-03-31 01:47:43,916 - create_prompt - INFO - query_preprocessed = рассвет детям горит невиданный море
+2025-03-31 01:48:04,305 - create_prompt - INFO - query_preprocessed = ренген стоит лапы собаки
+2025-03-31 01:49:27,607 - create_prompt - INFO - query_preprocessed = хочу записаться к врачуневрологу
+2025-03-31 01:52:10,935 - create_prompt - INFO - query_preprocessed = сколько делается анализ крови

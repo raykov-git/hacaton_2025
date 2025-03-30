@@ -8,3 +8,4 @@ whisper
 re
 aiohttp
 pydantic
+yake

@@ -5,6 +5,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from .db_to_texts import *
 import os
 from .find import *
+import yake
+
 
 # Создаём логгер для create_prompt.py
 LOGGER = logging.getLogger("create_prompt")
@@ -165,7 +167,7 @@ def find_answer(query, df, top_k=1):
 # Sorry, but i'm not that kinda guy
 # I won't buy you flowers just to see your smile
 # Определение подходяшего сценария на основе knowledge_base и query
-def find_similar_context(query, knowledge_base, top_k=1):
+"""def find_similar_context(query, knowledge_base, top_k=1):
     query_preprocessed = preprocess_text(query)
     query_embedding = Model_Sentence_Transformer.encode(query_preprocessed)
 
@@ -186,6 +188,54 @@ def find_similar_context(query, knowledge_base, top_k=1):
             "type": entry["type"],
             "similarity": float(similarity),  # явное приведение к float для сериализации
             "is_confident": similarity > 0.6  # флаг уверенности
+        })
+
+    return results"""
+
+
+def extract_keywords(text, top_k=5):
+    if not text:
+        return []
+    kw_extractor = yake.KeywordExtractor(lan="ru", n=1, top=top_k) 
+    keywords = kw_extractor.extract_keywords(text)
+    return [keyword for keyword, score in keywords]
+
+def find_similar_context(query, knowledge_base, top_k=1):
+
+    words = query.split()  # Разделяет по пробелам (учитывает множественные пробелы)
+
+    if len(words) > 5:
+        keywords = extract_keywords(query, top_k=5)
+
+        if keywords:
+            query_preprocessed = " ".join(keywords)
+        else:
+            query_preprocessed = preprocess_text(query)  
+
+        query_embedding = Model_Sentence_Transformer.encode(query_preprocessed)
+
+    else:
+        query_preprocessed = preprocess_text(query)
+
+        query_embedding = Model_Sentence_Transformer.encode(query_preprocessed)
+
+
+    LOGGER.info(f"query_preprocessed = {query_preprocessed}")
+
+
+    similarities = []
+    for entry in knowledge_base:
+        similarity = cosine_similarity([query_embedding], [entry["embedding"]])[0][0]
+        similarities.append((similarity, entry))
+
+    similarities.sort(reverse=True, key=lambda x: x[0])
+
+    results = []
+    for similarity, entry in similarities[:top_k]:
+        results.append({
+            "type": entry["type"],
+            "similarity": float(similarity),  
+            "is_confident": similarity >= 0.4
         })
 
     return results
