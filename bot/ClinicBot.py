@@ -6,6 +6,7 @@ from pathlib import Path
 from llm.create_prompt import *
 import scraper
 from apscheduler.schedulers.background import BackgroundScheduler
+from abstractBot import AbstractBot
 
 # TODO пути
 
@@ -29,16 +30,17 @@ file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelnam
 LOGGER.addHandler(file_handler)
 
 
-class ClinicBot:
+class ClinicBot(AbstractBot):
 
     def __init__(self):
+        super().__init__()
         LOGGER.info("Запуск бота")
-        """self.scheduler = BackgroundScheduler()
+        self.scheduler = BackgroundScheduler()
         # Запускать сразу + раз в сутки
         self.scheduler.add_job(self.run_scraper, 'interval', days=1)
         self.scheduler.start()
         # Ручной запуск при старте
-        self.run_scraper()"""
+        self.run_scraper()
 
     def run_scraper(self):
         try:
@@ -70,13 +72,14 @@ class ClinicBot:
         if result[0].get('type', 'unknown') == "feedback":
             return("Спасибо за ваш отзыв")
         
+        # MzNjMzFhOWQtMWQzOS00OWI3LTkxYTMtMDU1NWJkMGUyYTFkOmI5Njg3MDZlLWIwZDctNDY3MS05YjY3LWVmNjI1NjM3MzA3NQ
         prompt = []
         if create_prompt(result[0].get('type', 'unknown'), user_text, prompt):
             LOGGER.info(f"НАШ ПРОМПТ{prompt[0]}")
             # Для авторизации запросов используйте ключ, полученный в проекте GigaChat API
             with GigaChat(credentials=
-                          "MzNjMzFhOWQtMWQzOS00OWI3LTkxYTMtMDU1NWJkMGUyYTFkOmI5Njg3MDZlLWIwZDctNDY3MS05YjY3LWVmNjI1NjM3MzA3NQ==", 
-                        verify_ssl_certs=False, model="GigaChat-Pro") as giga:
+                          "N2EyMzFjNDMtYzkyMC00MzhiLWE1YWEtOGE1OGZjMDlmNjM5Ojg1ZTFkZTM1LWRhN2QtNDU0Yi05NzliLTk5MjY2ZGQyMWRiOQ==", 
+                        verify_ssl_certs=False, model="GigaChat-Max") as giga:
                 response = giga.chat(prompt[0])
 
             return response.choices[0].message.content
