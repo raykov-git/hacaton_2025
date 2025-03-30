@@ -248,3 +248,32 @@
 2025-03-30 21:24:37,162 - telegram_aiohttp - INFO - Обработка текста от 1026077068: сколько стоит
 2025-03-30 21:24:49,207 - telegram_aiohttp - INFO - Обработка текста от 1026077068: сколько стоит рентген
 2025-03-30 21:25:01,184 - telegram_aiohttp - INFO - Обработка текста от 1026077068: сколько стоит корова
+2025-03-30 22:24:19,241 - telegram_aiohttp - INFO - Обработка текста от 419449047: Здароу
+2025-03-30 22:24:38,151 - telegram_aiohttp - INFO - Получена команда /start от 419449047
+2025-03-30 22:24:43,647 - telegram_aiohttp - INFO - Получена команда /help от 419449047
+2025-03-30 22:25:10,676 - telegram_aiohttp - INFO - Получена команда /feedback от 419449047
+2025-03-30 22:25:19,096 - telegram_aiohttp - INFO - Обработка текста от 419449047: Пожалуйста
+2025-03-30 22:25:58,028 - telegram_aiohttp - INFO - Обработка текста от 419449047: РАсскажи что нельзя делать перед узи щитовидной железы
+2025-03-30 22:26:08,013 - telegram_aiohttp - INFO - Обработка текста от 419449047: что нельзя делать перед узи щитовидной железы
+2025-03-30 22:26:14,353 - telegram_aiohttp - INFO - Обработка текста от 419449047: то нельзя делать перед узи
+2025-03-30 22:27:07,398 - telegram_aiohttp - INFO - Обработка голоса
+2025-03-30 22:27:40,620 - telegram_aiohttp - INFO - Текст из аудио  Сколько стоит УЗИ?
+2025-03-30 22:33:50,838 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-30 22:34:02,215 - telegram_aiohttp - INFO - Bot starting...
+2025-03-30 22:34:03,834 - telegram_aiohttp - INFO - Bot start
+2025-03-30 23:48:15,354 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-30 23:48:25,207 - telegram_aiohttp - INFO - Bot starting...
+2025-03-30 23:48:26,886 - telegram_aiohttp - INFO - Bot start
+2025-03-30 23:50:10,172 - telegram_aiohttp - INFO - Bot stopp
+2025-03-30 23:50:10,181 - telegram_aiohttp - INFO - Bot stopped by user
+2025-03-30 23:53:03,569 - telegram_aiohttp - INFO - Using device: cpu
+2025-03-30 23:53:15,019 - telegram_aiohttp - INFO - Bot starting...
+2025-03-30 23:53:16,498 - telegram_aiohttp - INFO - Bot start
+2025-03-30 23:53:24,724 - telegram_aiohttp - INFO - Обработка текста от 419449047: hey
+2025-03-30 23:53:32,534 - telegram_aiohttp - INFO - Обработка текста от 419449047: Ёпта
+2025-03-30 23:53:46,878 - telegram_aiohttp - INFO - Обработка текста от 419449047: ОАК
+2025-03-30 23:54:28,134 - telegram_aiohttp - INFO - Получена команда /feedback от 1026077068
+2025-03-31 00:11:42,085 - telegram_aiohttp - INFO - Обработка текста от 1026077068: Здарова корова!
+2025-03-31 00:12:32,772 - telegram_aiohttp - INFO - Обработка текста от 1026077068: здорова карова!
+2025-03-31 00:12:45,051 - telegram_aiohttp - INFO - Получена команда /feedback от 1026077068
+2025-03-31 00:17:36,034 - telegram_aiohttp - INFO - Обработка текста от 1026077068: сколько стоит рентген

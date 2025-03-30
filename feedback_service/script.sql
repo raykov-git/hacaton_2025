@@ -1,4 +1,3 @@
-
 CREATE DATABASE feedback_db;
 USE feedback_db;
 

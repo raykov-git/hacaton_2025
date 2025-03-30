@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+asyncmy
+spacy
+pickle
+whisper
+re
+aiohttp
+pydantic
