@@ -34,6 +34,25 @@ def load_knowledge_base():
           knowledge_base.append(row)
   return knowledge_base
 
+# Загрузка аббревиатур
+def load_abbreviations():
+    abbreviations = {}
+    with open('files/abbreviations.csv', 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            # Ключ - регулярное выражение с границами слова, значение - полная форма
+            abbreviations[r'\b' + re.escape(row['abbreviation']) + r'\b'] = row['full_text']
+    return abbreviations
+
+# Замена аббревиатур
+def replace_abbreviations(text, abbreviations_dict):
+    for abbrev, full_form in abbreviations_dict.items():
+        text = re.sub(abbrev, full_form, text)
+    return text
+
+# Загружаем аббревиатуры из CSV
+abbreviations_dict = load_abbreviations()
+
 # Проверка
 knowledge_base = load_knowledge_base()
 
@@ -52,7 +71,7 @@ LOGGER.info("Форматируем в текст - ок")
 contacts_text = get_contacts_as_text()
 
 
-df_price=pd.read_csv("files/service.csv")
+"""df_price=pd.read_csv("files/service.csv")
 # Заполнение пустых значений, тк в нашем датасете с услугами оно есть
 df_price["Категория"] = df_price["Категория"].fillna("")
 df_price["Цена (руб.)"] = df_price["Цена (руб.)"].fillna("0")
@@ -70,7 +89,7 @@ df_tests = pd.read_csv("files/preparation.csv")
 
 df_tests["вопрос_preprocessed"] = df_tests["вопрос"].apply(preprocess_text)
 df_tests["ответ_preprocessed"] = df_tests["ответ"].apply(preprocess_text)
-df_tests["эмбеддинги_вопросов"] = df_tests["вопрос_preprocessed"].apply(lambda x: Model_Sentence_Transformer.encode(x))
+df_tests["эмбеддинги_вопросов"] = df_tests["вопрос_preprocessed"].apply(lambda x: Model_Sentence_Transformer.encode(x))"""
 
 """
 import pickle
@@ -99,7 +118,7 @@ for entry in knowledge_base:
     entry["embedding"] = Model_Sentence_Transformer.encode(entry["context_preprocessed"])
 
 
-# Функция поиска похожих услуг
+"""# Функция поиска похожих услуг
 def find_similar_services(query, top_k=5):
     query = preprocess_text(query)
     query_embedding = Model_Sentence_Transformer.encode([query])
@@ -141,7 +160,7 @@ def find_answer(query, df, top_k=1):
         response = df.iloc[idx]["ответ"]
         results.append((response, similarity_score))
 
-    return results
+    return results"""
 
 # Sorry, but i'm not that kinda guy
 # I won't buy you flowers just to see your smile
@@ -184,6 +203,9 @@ def create_prompt(category, query, prompt_out=None):
     Returns:
         bool: True если промт успешно создан, False если произошла ошибка
     """
+    # Замена аббревиатур
+    query = replace_abbreviations(query, abbreviations_dict)
+    
     try:
         if category == "price_and_timing":
             services = find_response(

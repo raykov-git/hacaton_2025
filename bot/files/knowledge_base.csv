@@ -1,11 +1,18 @@
 context,type
-Сколько стоит общий анализ,price_and_timing
-Стоимость процедур,price_and_timing
+Сколько стоит анализ,price_and_timing
+стоит,price_and_timing
+сколько стоит,price_and_timing
+какая цена,price_and_timing
+цена,price_and_timing
+Стоимость,price_and_timing
 Какова стоимость анализа,price_and_timing
 Через сколько дней готовы результаты,price_and_timing
+когда будут,price_and_timing
+какие виды,price_and_timing
 Когда придут анализы из лаборатории,price_and_timing
 Можно ли узнать цену,price_and_timing
 Сколько стоит анализ,price_and_timing
+Сколько стоит сдать,price_and_timing
 Как долго делают анализы,price_and_timing
 Цена приёма,price_and_timing
 Когда будут готовы анализы,price_and_timing
@@ -41,5 +48,6 @@ context,type
 В какое время можно прийти,schedule
 Когда перерыв на обед,schedule
 График работы в праздничные дни,schedule
+График ,schedule
 До какого времени вечером можно записаться,schedule
 корова,cow

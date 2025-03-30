@@ -1,10 +1,27 @@
-
-
 from bs4 import BeautifulSoup
 import sqlite3
 import requests
 import re, csv
 from datetime import datetime
+import logging
+import os
+
+# Создаём логгер для scraper.py
+LOGGER = logging.getLogger("scraper")
+LOGGER.setLevel(logging.INFO)
+
+# Создаём папку logs, если её ещё нет
+log_dir = os.path.join(os.path.dirname(__file__), 'logs')
+os.makedirs(log_dir, exist_ok=True)
+
+# Файл для логов scraper в папке logs
+log_file = os.path.join(log_dir, "scraper.log")
+file_handler = logging.FileHandler(log_file, encoding="utf-8", mode="a")
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+
+LOGGER.addHandler(file_handler)
+
+
 
 # .db
 url1 = "https://clinica.chitgma.ru/diagnosticheskaya-poliklinika"
@@ -15,25 +32,28 @@ url3 = "https://clinica.chitgma.ru/otdelenie-konsultativnoj-pomoshchi-detyam"
 url4 = "https://clinica.chitgma.ru/diagnosticheskaya-poliklinika"
 
 
-def create_database():
-    # TODO путь
-    conn = sqlite3.connect('clinic_schedule.db')
-    cursor = conn.cursor()
 
-    # Полностью пересоздаем таблицу (удаляем если существует)
-    cursor.execute('DROP TABLE IF EXISTS schedule')
-    cursor.execute('''
-        CREATE TABLE schedule (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            address TEXT,
-            department TEXT,
-            weekday TEXT,
-            time TEXT,
-            scrape_date TEXT
-        )
-    ''')
-    conn.commit()
-    return conn, cursor
+def create_database():
+    try:
+        conn = sqlite3.connect('files/clinic_schedule.db')
+        cursor = conn.cursor()
+
+        # Полностью пересоздаем таблицу (удаляем если существует)
+        cursor.execute('DROP TABLE IF EXISTS schedule')
+        cursor.execute('''
+            CREATE TABLE schedule (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                address TEXT,
+                department TEXT,
+                weekday TEXT,
+                time TEXT,
+                scrape_date TEXT
+            )
+        ''')
+        conn.commit()
+        return conn, cursor
+    except Exception as e:
+        LOGGER.error(f"Ошибка в создании базы clinic_schedule.db {e}")
 
 
 def save_to_database(cursor, conn, data):
@@ -49,6 +69,7 @@ def save_to_database(cursor, conn, data):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ))
     print(f"Данные успешно сохранены в БД")    
+    LOGGER.info(f"Данные успешно сохранены в БД")
     conn.commit()
     
 
@@ -73,18 +94,20 @@ def scrape_clinic_phone(url):
 
     except Exception as e:
         print(f"Ошибка: {e}")
+        LOGGER.error(f"Ошибка в : scrape_clinic_phone{e}")
         return None
 
-def save_to_csv(data, filename='contacts.csv'):
+def save_to_csv(data, filename='files/contacts.csv'):
     """Функция для сохранения данных контактов колл-центра диагностической поликлиники в CSV"""
     try:
         with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Подразделение', 'Номер телефона'])
+            writer.writerow(['подразделение', 'номер телефона'])
             writer.writerow([data['department'], data['phone']])
         print(f"Данные успешно сохранены в {filename}")
     except Exception as e:
         print(f"Ошибка при сохранении в CSV: {e}")
+        LOGGER.error(f"Ошибка при сохранении в CSV: {e}")
 
         
 def parse_schedule(url):
@@ -193,6 +216,7 @@ def parse_schedule(url):
 
     except requests.RequestException as e:
         print(f"Ошибка при загрузке страницы: {e}")
+        LOGGER.error(f"Ошибка при загрузке страницы: {e}")
         return []
 
 
@@ -241,58 +265,74 @@ def parse_special_schedule(url):
 
     except requests.RequestException as e:
         print(f"Ошибка при загрузке страницы: {e}")
+        LOGGER.error(f"Ошибка при загрузке страницы: {e}")
         return []
         
 
 
 def main():
-    # Создаем/пересоздаем базу данных
-    conn, cursor = create_database()
-    print("База данных успешно создана/очищена")
+    LOGGER.info("scraper.main")
 
-    # Парсим данные с url1
-    schedule_data = parse_schedule(url1)
+    try:
+        # Создаем/пересоздаем базу данных
+        conn, cursor = create_database()
+        print("База данных успешно создана/очищена")
+        LOGGER.info("База данных успешно создана/очищена")
 
-    if schedule_data:
-        # Сохраняем в базу
-        save_to_database(cursor, conn, schedule_data)
-        print(f"\nУспешно сохранено {len(schedule_data)} записей")
-    else:
-        print("Не удалось извлечь данные")
+        # Парсим данные с url1
+        schedule_data = parse_schedule(url1)
 
-    # Парсим данные с url2
-    schedule_data = parse_schedule(url2)
+        if schedule_data:
+            # Сохраняем в базу
+            save_to_database(cursor, conn, schedule_data)
+            print(f"\nУспешно сохранено {len(schedule_data)} записей")
+            LOGGER.info(f"\nУспешно сохранено {len(schedule_data)} записей")
+        else:
+            LOGGER.info("Не удалось извлечь данные")
+            print("Не удалось извлечь данные")
 
-    if schedule_data:
-        # Сохраняем в базу
-        save_to_database(cursor, conn, schedule_data)
-        print(f"\nУспешно сохранено {len(schedule_data)} записей")
-    else:
-        print("Не удалось извлечь данные")
+        # Парсим данные с url2
+        schedule_data = parse_schedule(url2)
 
-    # Парсим данные с url3
-    schedule_data = parse_special_schedule(url3)
+        if schedule_data:
+            # Сохраняем в базу
+            save_to_database(cursor, conn, schedule_data)
+            print(f"\nУспешно сохранено {len(schedule_data)} записей")
+            LOGGER.info(f"\nУспешно сохранено {len(schedule_data)} записей")
+        else:
+            LOGGER.info("Не удалось извлечь данные")
+            print("Не удалось извлечь данные")
 
-    if schedule_data:
-        # Сохраняем в базу
-        save_to_database(cursor, conn, schedule_data)
-        print(f"\nУспешно сохранено {len(schedule_data)} записей")
-    else:
-        print("Не удалось извлечь данные")
+        # Парсим данные с url3
+        schedule_data = parse_special_schedule(url3)
+
+        if schedule_data:
+            # Сохраняем в базу
+            save_to_database(cursor, conn, schedule_data)
+            print(f"\nУспешно сохранено {len(schedule_data)} записей")
+            LOGGER.info(f"\nУспешно сохранено {len(schedule_data)} записей")
+        else:
+            LOGGER.info("Не удалось извлечь данные")
+            print("Не удалось извлечь данные")
 
 
-    # Парсим данные с url4
-    result = scrape_clinic_phone(url4)
+        # Парсим данные с url4
+        result = scrape_clinic_phone(url4)
 
-    if result:
-        print(f"Найдены данные")
-        # Сохраняем результат в CSV
-        save_to_csv(result)
-    else:
-        print("Не удалось найти телефонный номер на странице")
+        if result:
+            print(f"Найдены данные")
+            LOGGER.info(f"Найдены данные")
+            # Сохраняем результат в CSV
+            save_to_csv(result)
+            LOGGER.info("сохранено в csv")
+        else:
+            print("Не удалось найти телефонный номер на странице")
+            LOGGER.error("Не удалось найти телефонный номер на странице")
 
-    # Закрываем соединение
-    conn.close()
+        # Закрываем соединение
+        conn.close()
+    except Exception as e:
+        LOGGER.error(f"ошибка в scraper.main {e}")
 
 if __name__ == "__main__":
     main()

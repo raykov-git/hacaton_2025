@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, types
+
 from aiogram.filters import Command
 import logging
 import aiohttp
@@ -8,14 +8,12 @@ from aiogram import F
 from aiogram.types import Message
 import whisper
 import torch
-from aiogram.types import Message
 from pydub import AudioSegment
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.context import FSMContext
+from aiogram import Bot, Dispatcher, types
+from aiogram.types import BotCommand, MenuButtonCommands
 
-"""
-
-обработка голоса внутри
-
-"""
 
 # Создаём логгер для telegram_aiohttp.py
 LOGGER = logging.getLogger("telegram_aiohttp")
@@ -38,19 +36,42 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 LOGGER.info(f"Using device: {device}")
 WHISPER_MODEL = whisper.load_model("small").to(device)
 
+
 # Токен бота
 BOT_TOKEN = "7902145577:AAHdr9SmhEpgCM3pdBU_TBGMYaL_aMAfACw"
-BASE_URL = "http://127.0.0.1:8000/"
+CHAT_BOT_URL = "http://127.0.0.1:8000/"
+
+# api бд с отзывами
+FEEDBACK_SERVICE_URL = "http://localhost:8001"
 
 # Инициализация бота
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 
+# Регистрируем команды (чтобы они отображались в меню)
+async def set_commands(bot: Bot):
+    await bot.set_my_commands([
+        BotCommand(command="start", description="запустить бота"),
+        BotCommand(command="help", description="помощь"),
+        BotCommand(command="feedback", description="оставить отзыв")
+    ])
+    await bot.set_chat_menu_button(menu_button=MenuButtonCommands())
+
+
+async def on_startup(bot: Bot):
+    await set_commands(bot)
+
+
+class FeedbackStates(StatesGroup):
+    waiting_for_feedback = State()  # Состояние ожидания отзыва
+
+
+
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     LOGGER.info(f"Получена команда /start от {message.from_user.id}")
-    api_url = BASE_URL + "api"
+    api_url = CHAT_BOT_URL + "api"
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
@@ -66,13 +87,44 @@ async def cmd_start(message: types.Message):
 
 
 @dp.message(Command("help"))
-async def cmd_help(message: types.Message):
+async def help(message: types.Message):
     LOGGER.info(f"Получена команда /help от {message.from_user.id}")
     await message.answer("Задайте мне вопрос текстом или голосом")
 
 
+# обработка /feedback
+@dp.message(Command("feedback"))
+async def feedback(message: types.Message, state: FSMContext):
+    LOGGER.info(f"Получена команда /feedback от {message.from_user.id}")
+    await message.answer("Напишите Ваш отзыв")
+    await state.set_state(FeedbackStates.waiting_for_feedback)  # Устанавливаем состояние
+
+@dp.message(FeedbackStates.waiting_for_feedback, F.text)
+async def handle_feedback(message: Message, state: FSMContext):
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                f"{CHAT_BOT_URL}feedback",  # URL clinicBot
+                json={
+                    "feedback": message.text,
+                    "user_id": message.from_user.id
+                }
+            ) as resp:
+                if resp.status == 200:
+                    await message.reply("✅ Спасибо за отзыв!")
+                else:
+                    error = await resp.json()
+                    await message.reply(f"❌ Ошибка при сохранении отзыва: {error.get('detail', 'Неизвестная ошибка')}")
+    except Exception as e:
+        LOGGER.error(f"Feedback service error: {e}")
+        await message.reply("⚠️ Сервис отзывов временно недоступен. Попробуйте позже.")
+    finally:
+        await state.clear()
+
+
+
 async def process_user_text(text: str, message: types.Message, processing_msg):
-    api_url = BASE_URL + "qa"
+    api_url = CHAT_BOT_URL + "qa"
     # Изменяем payload согласно RequestModel (используем "message" вместо "text")
     payload = {"question": text}
     
@@ -97,7 +149,11 @@ async def process_user_text(text: str, message: types.Message, processing_msg):
 
 
 @dp.message(F.text)
-async def handle_text(message: Message):
+async def handle_text(message: Message, state: FSMContext):
+    current_state = await state.get_state()
+    if current_state == FeedbackStates.waiting_for_feedback.state:
+        return  # Пропускаем, если пользователь в состоянии отправки отзыва
+
     print(f"Обработка текста от {message.from_user.id}: {message.text}")
     LOGGER.info(f"Обработка текста от {message.from_user.id}: {message.text}")
 
@@ -154,6 +210,9 @@ async def convert_message_to_str(message: Message) -> str:
 async def main():
     try:
         await bot.delete_webhook(drop_pending_updates=True)
+
+        await set_commands(bot)
+
         print("Bot start")
         LOGGER.info("Bot start")
         await dp.start_polling(bot, skip_updates=True)

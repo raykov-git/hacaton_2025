@@ -1,3 +1,4 @@
 **/__pycache__/
 /temp_dir/
 **/__logs__/
+**/.env*

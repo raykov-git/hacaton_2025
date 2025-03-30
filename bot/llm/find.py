@@ -4,7 +4,7 @@ import pickle
 import re
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
-
+import spacy
 
 model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
@@ -13,7 +13,7 @@ df_services = pd.read_csv("files/service.csv")
 
 
 def find_response(query, embeddings_file, df, top_k=1):
-    query = preprocess_text(query)
+    query = lemmatize_text(query)
     query_embedding = model.encode([query])
 
     # Загрузка эмбобиков из файла
@@ -29,11 +29,11 @@ def find_response(query, embeddings_file, df, top_k=1):
     top_indices = np.argsort(similarities)[::-1][:top_k]
 
     results = []
-    if embeddings_file == "preparation_embeddings.pkl":
+    if embeddings_file == "files/preparation_embeddings.pkl":
         for idx in top_indices:
             row = df.iloc[int(idx)]
             results.append((row["ответ"], similarities[idx]))
-    elif embeddings_file == "service_embeddings.pkl":
+    elif embeddings_file == "files/service_embeddings.pkl":
         for idx in top_indices:
             row = df.iloc[int(idx)]
             results.append((
@@ -55,6 +55,21 @@ def preprocess_text(text):
     text = re.sub(r"[^a-zа-яё\s]", "", text)
     return text.strip()
 
+
+
+
+nlp = spacy.load("ru_core_news_sm")
+def lemmatize_text(text):
+    if pd.isna(text) or text is None:  
+        return ""
+    text = text.lower()
+    
+    text = re.sub(r"[^a-zA-Zа-яА-ЯёЁ\s]", "", text)
+    
+    doc = nlp(text)
+    lemmatized_words = [token.lemma_ for token in doc]
+    
+    return " ".join(lemmatized_words).lower()
 
 # results = find_response(
 #     query=query,

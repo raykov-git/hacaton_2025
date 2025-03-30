@@ -1,0 +1,19 @@
+2025-03-30 20:21:42,715 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 20:28:11,529 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 20:32:42,039 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 20:33:34,502 - main - ERROR - Error saving feedback: (1054, "Unknown column 'user_id' in 'field list'")
+2025-03-30 20:33:34,502 - main - ERROR - Error saving feedback: (1054, "Unknown column 'user_id' in 'field list'")
+2025-03-30 20:36:45,035 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 20:43:06,624 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 20:43:15,676 - main - INFO - Database connection established successfully
+2025-03-30 20:43:15,676 - main - INFO - Database connection established successfully
+2025-03-30 20:44:27,879 - main - INFO - Database connection established successfully
+2025-03-30 20:44:27,879 - main - INFO - Database connection established successfully
+2025-03-30 20:46:33,000 - main - INFO - Database connection established successfully
+2025-03-30 20:46:33,000 - main - INFO - Database connection established successfully
+2025-03-30 21:07:38,047 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 21:11:45,926 - main - INFO - Database connection established successfully
+2025-03-30 21:11:45,926 - main - INFO - Database connection established successfully
+2025-03-30 21:17:11,347 - main - INFO - uvicorn is run on host='0.0.0.0', port=8001;  reload=True
+2025-03-30 21:23:51,890 - main - INFO - Database connection established successfully
+2025-03-30 21:23:51,890 - main - INFO - Database connection established successfully

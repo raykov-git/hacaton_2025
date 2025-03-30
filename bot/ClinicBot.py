@@ -4,6 +4,10 @@ import os
 import sys
 from pathlib import Path
 from llm.create_prompt import *
+import scraper
+from apscheduler.schedulers.background import BackgroundScheduler
+
+# TODO пути
 
 # Добавляем корень проекта в PYTHONPATH
 root_dir = Path(__file__).parent.parent  # Поднимаемся на два уровня вверх
@@ -28,46 +32,51 @@ LOGGER.addHandler(file_handler)
 class ClinicBot:
 
     def __init__(self):
+        LOGGER.info("Запуск бота")
+        """self.scheduler = BackgroundScheduler()
+        # Запускать сразу + раз в сутки
+        self.scheduler.add_job(self.run_scraper, 'interval', days=1)
+        self.scheduler.start()
+        # Ручной запуск при старте
+        self.run_scraper()"""
 
-        # TODO скрапер по api при инициализации и спустя время
-
-        pass
-
-    def help(self):
-        return "Этот бот может..."
+    def run_scraper(self):
+        try:
+            scraper.main()
+            LOGGER.info("Скраппер успешно выполнен")
+        except Exception as e:
+            LOGGER.error(f"Ошибка скрапера: {e}")
     
 
     def api(self):
-        return "Добро пожаловать в ClinicBot API!"
-    
+        return "Здравствуйте! Вы обратились в чат-бот поликлиники. " \
+        "Мы готовы ответить на ваши вопросы и помочь с записью к врачу, " \
+        "информацией о расписании работы специалистов, " \
+        "а также предоставить данные о необходимых документах и услугах нашей клиники. " \
+        "Пожалуйста, уточните ваш вопрос или просьбу."
 
-    def get_all_doctors(self):
-        return "Вот список докторов..."
-    
 
-    def get_doctor(self):
-        return "Вот информация о докторе..."
-    
-
-    def add_doctor(self, name, specialty):
-        return f"добавили доктора {name} со специальностью {specialty}"
-   
 
     def get_answer_from_llm(self, user_text):
 
         result = find_similar_context(user_text, knowledge_base)
         LOGGER.info(result[0].get('type', 'unknown'),)
+        LOGGER.info(result[0].get('similarity', 'unknown'),)
         confidence  = result[0].get('is_confident', 'unknown')
+        
         if(confidence == False):
             return ('Извините, я вас не понимаю. Попробуйте изменить запрос.')
-        prompt = []
 
+        if result[0].get('type', 'unknown') == "feedback":
+            return("Спасибо за ваш отзыв")
+        
+        prompt = []
         if create_prompt(result[0].get('type', 'unknown'), user_text, prompt):
             LOGGER.info(f"НАШ ПРОМПТ{prompt[0]}")
             # Для авторизации запросов используйте ключ, полученный в проекте GigaChat API
             with GigaChat(credentials=
                           "MzNjMzFhOWQtMWQzOS00OWI3LTkxYTMtMDU1NWJkMGUyYTFkOmI5Njg3MDZlLWIwZDctNDY3MS05YjY3LWVmNjI1NjM3MzA3NQ==", 
-                        verify_ssl_certs=False, model="GigaChat-Max") as giga:
+                        verify_ssl_certs=False, model="GigaChat-Pro") as giga:
                 response = giga.chat(prompt[0])
 
             return response.choices[0].message.content

@@ -94,9 +94,9 @@ def get_contacts_as_text(csv_file='files/contacts.csv'):
 
 
 # Функция предобработки текста
-def preprocess_text(text):
-    if text is None:  # Проверка на None
-        return ""
-    text = text.lower()
-    text = re.sub(r"[^a-zа-яё\s]", "", text)
-    return text.strip()
+#def preprocess_text(text):
+#    if text is None:  # Проверка на None
+#        return ""
+#    text = text.lower()
+#    text = re.sub(r"[^a-zа-яё\s]", "", text)
+#    return text.strip()
